@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Fortune Teller Store</title>
+    <meta charset="utf-8" />
+    <meta name="description" content="&lt;model-viewer&gt; template" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      type="text/css"
+      media="media query properties"
+      media="screen and (min-width: 601px)"
+      href="./src/styles.css"
+      rel="stylesheet"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      media="media query properties"
+      media="screen and (max-width: 600px)"
+      href="./src/mobile.css"
+    />
+    <!-- OPTIONAL: The :focus-visible polyfill removes the focus ring for some input types -->
+    <script
+      src="https://unpkg.com/focus-visible@5.0.2/dist/focus-visible.js"
+      defer
+    ></script>
+  </head>
+
+  <body>
+    <!-- <model-viewer> HTML element crystal ball -->
+    <model-viewer
+      src="./assets/models/crystal_ball.glb"
+      ar
+      ar-modes="webxr scene-viewer quick-look"
+      camera-controls
+      poster="./assets/models/ball_poster.webp"
+      shadow-intensity="1.43"
+      exposure="0.71"
+      environment-image="legacy"
+    >
+      <!-- Hotspots crystal ball-->
+      <button
+        id="ball1"
+        class="Hotspot show"
+        slot="hotspot-ball1"
+        data-position="-0.0016847534778891178m 0.023276355948386892m 0.008672966143240958m"
+        data-normal="-0.08552898952191036m 0.08552860039511798m 0.9926578718097254m"
+        data-visibility-attribute="visible"
+      >
+        <div class="HotspotAnnotation">Crystal Ball</div>
+      </button>
+      <button
+        id="ball2"
+        class="Hotspot show"
+        slot="hotspot-ball2"
+        data-position="-0.004631008286357015m 0.008758955535327006m 0.005278273920312331m"
+        data-normal="-0.28936999257970425m -0.9124308098347292m 0.2893700479641286m"
+        data-visibility-attribute="visible"
+      >
+        <div class="HotspotAnnotation">Display Stand</div>
+      </button>
+
+      <!-- Hotspots candle-->
+      <button
+        id="candle1"
+        class="Hotspot hide"
+        slot="hotspot-candle1"
+        data-position="-0.10841259376657408m -0.4854020676843299m -0.1181484777618278m"
+        data-normal="-0.5827559676125198m -0.42195019959227753m -0.6945167465770952m"
+        data-visibility-attribute="visible"
+      >
+        <div class="HotspotAnnotation">Holder</div></button
+      ><button
+        id="candle2"
+        class="Hotspot hide"
+        slot="hotspot-candle2"
+        data-position="0.02455073488239412m 0.9723259195558377m -0.00838404741522654m"
+        data-normal="0m 4.371139050718397e-8m -0.9999999999999991m"
+        data-visibility-attribute="visible"
+      >
+        <div class="HotspotAnnotation">Wick</div>
+      </button>
+
+      <!-- Hotspots ouija board-->
+      <button
+        id="board1"
+        class="Hotspot hide"
+        slot="hotspot-board1"
+        data-position="-23.34458172311832m 4.602067645865829m 3.6812431655609226m"
+        data-normal="0.007381540952406969m 0.9999377674781479m -0.008365047757510374m"
+        data-visibility-attribute="visible"
+      >
+        <div class="HotspotAnnotation">Indicator</div>
+      </button>
+      <button
+        id="board2"
+        class="Hotspot hide"
+        slot="hotspot-board2"
+        data-position="13.643575498813828m 1.7714808595334932m -39.59098339876476m"
+        data-normal="-1.6292068005796208e-7m 0.9999999999999869m -3.194387209245651e-14m"
+        data-visibility-attribute="visible"
+      >
+        <div class="HotspotAnnotation">Ouija Board</div>
+      </button>
+
+      <div class="title-brand">Fortune Teller</div>
+
+      <div class="progress-bar hide" slot="progress-bar">
+        <div class="update-bar"></div>
+      </div>
+
+      <button slot="ar-button" id="ar-button">
+        View in your space
+      </button>
+
+      <div id="ar-prompt">
+        <img src="./assets/ar_hand_prompt.png" />
+      </div>
+
+      <button id="ar-failure">
+        AR is not tracking!
+      </button>
+    </model-viewer>
+
+    <!-- Selection buttons -->
+    <div class="moveBottom"
+    <div class="slider">
+      <div class="slides">
+        <button
+          class="slide selected"
+          onclick="switchSrc(this,'crystal_ball')"
+          style="background-image: url('./assets/models/ball_poster.webp');"
+        ></button>
+        <button
+          class="slide"
+          onclick="switchSrc(this, 'lowpoly_candle')"
+          style="background-image: url('./assets/models/candle_poster.webp');"
+        ></button>
+        <button
+          class="slide"
+          onclick="switchSrc(this, 'ouija_board')"
+          style="background-image: url('./assets/models/board_poster.webp');"
+        ></button>
+      </div>
+    </div>
+    </div>
+    <!-- Loads <model-viewer> for browsers: -->
+
+    <!-- switch 3d models -->
+    <script type="module">
+      const modelViewer = document.querySelector("model-viewer");
+
+      // switch control
+      window.switchSrc = (element, name) => {
+        const base = "./assets/models/" + name;
+        modelViewer.src = base + ".glb";
+        modelViewer.poster = base + ".webp";
+        const slides = document.querySelectorAll(".slide");
+        slides.forEach((element) => {
+          element.classList.remove("selected");
+        });
+        element.classList.add("selected");
+
+        //hotspots control
+        var infoSet = [];
+
+        const info = document.querySelectorAll(".Hotspot");
+        info.forEach((element) => {
+          element.classList.add("hide");
+        });
+
+        if (name === "crystal_ball") {
+          var infoSet = document.querySelectorAll(`[id^="ball"]`);
+        }
+        if (name === "lowpoly_candle") {
+          var infoSet = document.querySelectorAll(`[id^="candle"]`);
+        }
+        if (name === "ouija_board") {
+          var infoSet = document.querySelectorAll(`[id^="board"]`);
+        }
+
+        infoSet.forEach((element) => {
+          element.classList.remove("hide");
+          element.classList.add("show");
+        });
+        // end hostpots control
+      };
+      // end switch control
+      document
+        .querySelector(".slider")
+        .addEventListener("beforexrselect", (ev) => {
+          // keeps slider interactions from affecting xr scene
+          ev.preventDefault();
+        });
+    </script>
+    <script src="./src/script.js"></script>
+    <script
+      type="module"
+      src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
+    ></script>
+  </body>
+</html>

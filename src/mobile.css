@@ -1,0 +1,269 @@
+@import url("https://fonts.googleapis.com/css2?family=Kolker+Brush&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Kolker+Brush&family=Nanum+Brush+Script&display=swap");
+
+@media only screen and (max-width: 600px) {
+  /* @import url("https://fonts.gstatic.com/s/kolkerbrush/v3/iJWDBXWRZjfKWdvmzwvvog3O66h7.woff2"); */
+
+  .title-brand {
+    /* font-family: "Cinzel", serif; */
+    font-family: "Kolker Brush", cursive;
+    text-align: center;
+    font-size: 4.8rem;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 1px;
+    color: #ffffff;
+  }
+
+  :not(:defined) > * {
+    display: none;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #c680ff;
+  }
+
+  model-viewer {
+    width: 100%;
+    height: 80%;
+    background-color: #c680ff;
+  }
+
+  .Hotspot {
+    background: rgba(255, 255, 255, 0.55);
+    border-radius: 32px;
+    border: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
+    cursor: pointer;
+    height: 24px;
+    padding: 8px;
+    position: relative;
+    transition: opacity 0.3s;
+    width: 24px;
+  }
+
+  .Hotspot:not([data-visible]) {
+    background: transparent;
+    border: 4px solid #fff;
+    box-shadow: none;
+    height: 32px;
+    pointer-events: none;
+    width: 32px;
+  }
+
+  .Hotspot:focus {
+    border: 4px solid rgb(0, 0, 0);
+    height: 32px;
+    outline: none;
+    width: 32px;
+  }
+
+  .Hotspot > * {
+    opacity: 1;
+    transform: translateY(-50%);
+  }
+
+  .HotspotAnnotation {
+    background: rgba(198, 128, 255, 0.25);
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    color: rgba(0, 0, 0, 0.8);
+    display: block;
+    /* font-family: Futura, Helvetica Neue, sans-serif; */
+    /* font-family: "Cinzel", serif;
+    font-family: "Kolker Brush", cursive; */
+    font-family: "Nanum Brush Script", cursive;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    left: calc(100% + 1em);
+    max-width: 128px;
+    overflow-wrap: break-word;
+    padding: 0.5em 1em;
+    position: absolute;
+    top: 50%;
+    width: max-content;
+  }
+
+  .Hotspot:not([data-visible]) > * {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(calc(-50% + 4px));
+    transition: transform 0.3s, opacity 0.3s;
+  }
+
+  .progress-bar {
+    display: block;
+    width: 33%;
+    height: 10%;
+    max-height: 2%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    border-radius: 25px;
+    box-shadow: 0px 3px 10px 3px rgba(0, 0, 0, 0.5),
+      0px 0px 5px 1px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .progress-bar.hide {
+    visibility: hidden;
+    transition: visibility 0.3s;
+  }
+
+  .update-bar {
+    background-color: rgba(255, 255, 255, 0.9);
+    width: 0%;
+    height: 100%;
+    border-radius: 25px;
+    float: left;
+    transition: width 0.3s;
+  }
+
+  #ar-button {
+    background-image: url(../assets/ar_icon.png);
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    background-position: 12px 50%;
+    /* background-color: #c680ff; */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    bottom: 16px;
+    padding: 0px 16px 0px 40px;
+    font-family: "Nanum Brush Script", cursive;
+    font-size: 20px;
+    color: #c680ff;
+    height: 36px;
+    line-height: 36px;
+    border-radius: 18px;
+    border: 1px solid #dadce0;
+  }
+
+  #ar-button:active {
+    background-color: #e8eaed;
+  }
+
+  #ar-button:focus {
+    outline: none;
+  }
+
+  #ar-button:focus-visible {
+    outline: 1px solid #4285f4;
+  }
+
+  model-viewer > #ar-failure {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 175px;
+    display: none;
+  }
+  model-viewer[ar-tracking="not-tracking"] > #ar-failure {
+    display: block;
+  }
+
+  @keyframes circle {
+    from {
+      transform: translateX(-50%) rotate(0deg) translateX(50px) rotate(0deg);
+    }
+    to {
+      transform: translateX(-50%) rotate(360deg) translateX(50px)
+        rotate(-360deg);
+    }
+  }
+
+  @keyframes elongate {
+    from {
+      transform: translateX(100px);
+    }
+    to {
+      transform: translateX(-100px);
+    }
+  }
+
+  model-viewer > #ar-prompt {
+    position: absolute;
+    left: 50%;
+    bottom: 60px;
+    animation: elongate 2s infinite ease-in-out alternate;
+    display: none;
+  }
+
+  model-viewer[ar-status="session-started"] > #ar-prompt {
+    display: block;
+  }
+
+  model-viewer > #ar-prompt > img {
+    animation: circle 4s linear infinite;
+  }
+
+  .moveBottom {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: vh;
+    margin: auto;
+  }
+
+  .slider {
+    width: 100%;
+    height: 50%;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+  }
+  .slides {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    justify-content: center;
+    background-color: transparent;
+    margin: auto;
+    /* bottom: 0; */
+    width: 100%;
+  }
+  .slide {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    width: 100px;
+    height: 100px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 10px;
+    border-radius: 10px;
+    border: none;
+    display: flex;
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .slide.selected {
+    border: 2.5px solid #ffffff;
+    background-color: rgba(255, 255, 255, 0.75);
+  }
+
+  .slide:focus {
+    outline: none;
+  }
+
+  .slide:focus-visible {
+    outline: 1px solid #c680ff;
+  }
+
+  .show {
+    display: block !important;
+  }
+
+  .hide {
+    display: none !important;
+  }
+}
